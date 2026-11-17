@@ -4,7 +4,7 @@ Site e blog em [Astro](https://astro.build), com o visual baseado no design syst
 
 ## Rodando
 
-Precisa de Node 22 ou mais novo (o `.nvmrc` já aponta para isso).
+Precisa de Node 22.23.4 ou mais novo. O `.nvmrc` aponta para o Node 24, que é a versão que a Cloudflare usa no build.
 
 ```bash
 npm install
@@ -48,6 +48,18 @@ Com `draft: true` o post fica escondido de todo o site. As tags geram as página
 
 Crie `src/content/projects/nome-do-projeto.md` seguindo o formato de `fc-stm32f405.md`. Os campos `status`, `parts` e `specs` alimentam o card e a tabela da página.
 
-## Domínio
+## Publicação e domínio
 
-Quando o endereço final existir, descomente a linha `site:` em `astro.config.mjs`.
+O site é publicado na Cloudflare, como Worker com static assets. A Cloudflare lê o repositório do GitHub, roda o build e publica a cada push na `main`, então não existe workflow no GitHub. A configuração fica em `wrangler.jsonc`, e o domínio `borelgabriel.com` em `site:` no `astro.config.mjs`. Com domínio próprio não se usa `base`.
+
+Configuração única, no painel da Cloudflare:
+
+1. Em **Workers & Pages > Create > Import a repository**, autorize o app da Cloudflare no GitHub e escolha só este repositório.
+2. Nome do projeto: `borelgabriel`, igual ao `name` do `wrangler.jsonc`.
+3. Build command: `npm run build`. Deploy command: `npx wrangler deploy`.
+4. **Save and Deploy**. O site abre primeiro num endereço `workers.dev`.
+5. No Worker, vá em **Settings > Domains & Routes > Add > Custom Domain** e adicione `borelgabriel.com`. Repita com `www.borelgabriel.com`. A Cloudflare cria o DNS e o certificado sozinha.
+
+O build usa a versão do Node do `.nvmrc`. Se mudar de versão, confira se o Astro ainda suporta.
+
+Deploy manual, se precisar: `npx wrangler login` uma vez e depois `npm run build && npx wrangler deploy`.

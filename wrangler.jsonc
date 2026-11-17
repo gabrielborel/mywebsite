@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Precisa ser igual ao nome do Worker criado no painel da Cloudflare.
+  "name": "borelgabriel",
+  // Data em que o site foi configurado (a doc pede "a data de hoje").
+  "compatibility_date": "2026-11-17",
+  "assets": {
+    // Pasta gerada por `npm run build`.
+    "directory": "./dist",
+    // Rota que não existe serve a página 404 do site (src/pages/404.astro).
+    "not_found_handling": "404-page"
+  }
+}
