@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+---
+
+<Base title="Sobre" description="Quem escreve este site e o que ele documenta.">
+  <div class="container">
+    <header class="page-head">
+      <p class="label">Sobre</p>
+      <h1 class="display-l">{SITE.name}</h1>
+    </header>
+    <div class="prose" style="margin-top: 0; padding-bottom: var(--space-9);">
+      <p>
+        Sou desenvolvedor backend e estudante de Ciência da Computação. Meu objetivo é trabalhar com
+        firmware embarcado, e este site é onde documento esse caminho.
+      </p>
+      <p>
+        Aqui ficam os projetos de hardware e firmware que estou construindo e as anotações de estudo
+        sobre eletrônica e matemática. Cada decisão de projeto cita a fonte de onde veio.
+      </p>
+      <p>
+        O código dos projetos está no <a href={SITE.github}>GitHub</a>.
+      </p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,95 @@
+/* Tokens do design system Horizonte (project/tokens.json). Nao invente valores aqui:
+   se o design system mudar, atualize este arquivo a partir dele. */
+
+:root {
+  color-scheme: light;
+
+  /* cor - tema claro (padrao) */
+  --surface-000: #fafaf7;
+  --surface-100: #f1f1ea;
+  --surface-200: #e4e4da;
+  --ink-000: #10120d;
+  --ink-100: #484c41;
+  --ink-200: #696d5f;
+  --line-100: #d6d6ca;
+  --line-200: #757a6a;
+  --kelp: #505544;
+  --kelp-strong: #3c4033;
+  --on-kelp: #fafaf7;
+  --signal-live: #2c6b3d;
+  --signal-warn: #7a5300;
+  --signal-fault: #a12626;
+  --signal-idle: #2f5d7d;
+  --on-signal: #fafaf7;
+  --focus: #1750b5;
+  --shadow-overlay: 0 12px 32px rgba(16, 18, 13, 0.2);
+
+  /* tipografia */
+  --font-sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  /* espacamento (escala de 4px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* raios */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --radius-pill: 999px;
+}
+
+/* tema escuro: segue o sistema, a menos que o usuario tenha escolhido o claro */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --surface-000: #0c0e0a;
+    --surface-100: #161913;
+    --surface-200: #1f231b;
+    --ink-000: #f3f4ee;
+    --ink-100: #afb4a4;
+    --ink-200: #8a8f7f;
+    --line-100: #2a2e24;
+    --line-200: #6e7364;
+    --kelp: #a9b490;
+    --kelp-strong: #c2cba8;
+    --on-kelp: #10120d;
+    --signal-live: #7fc593;
+    --signal-warn: #d9a441;
+    --signal-fault: #f08080;
+    --signal-idle: #8ab6d6;
+    --on-signal: #0c0e0a;
+    --focus: #7aa7ff;
+    --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* tema escuro escolhido pelo botao */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --surface-000: #0c0e0a;
+  --surface-100: #161913;
+  --surface-200: #1f231b;
+  --ink-000: #f3f4ee;
+  --ink-100: #afb4a4;
+  --ink-200: #8a8f7f;
+  --line-100: #2a2e24;
+  --line-200: #6e7364;
+  --kelp: #a9b490;
+  --kelp-strong: #c2cba8;
+  --on-kelp: #10120d;
+  --signal-live: #7fc593;
+  --signal-warn: #d9a441;
+  --signal-fault: #f08080;
+  --signal-idle: #8ab6d6;
+  --on-signal: #0c0e0a;
+  --focus: #7aa7ff;
+  --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.6);
+}

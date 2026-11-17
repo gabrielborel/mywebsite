@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { STATUS_LABEL } from '../../utils';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, summary, status, repo, specs } = project.data;
+---
+
+<Base title={title} description={summary}>
+  <div class="container">
+    <article class="article">
+      <header>
+        <div class="article__meta">
+          <span class="label">Projeto</span>
+          <span class="status" data-status={status}>{STATUS_LABEL[status]}</span>
+        </div>
+        <h1 class="display-l article__title">{title}</h1>
+        <p class="body-l article__lede">{summary}</p>
+        {
+          repo && (
+            <div class="btn-row" style="margin-top: var(--space-5);">
+              <a class="btn btn--secondary" href={repo}>
+                Ver no GitHub
+              </a>
+            </div>
+          )
+        }
+      </header>
+
+      {
+        specs.length > 0 && (
+          <table class="spec" style="margin-top: var(--space-7); max-width: 900px;">
+            <tbody>
+              {specs.map((s) => (
+                <tr>
+                  <th scope="row">{s.label}</th>
+                  <td>{s.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )
+      }
+
+      <div class="prose" style="margin-top: var(--space-6);">
+        <Content />
+      </div>
+      <p class="ui" style="margin-top: var(--space-8);"><a href="/projetos/">Todos os projetos</a></p>
+    </article>
+  </div>
+</Base>

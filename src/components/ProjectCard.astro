@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { STATUS_LABEL } from '../utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  n: string;
+}
+const { project, n } = Astro.props;
+const { title, summary, status, parts } = project.data;
+---
+
+<a class="card" href={`/projetos/${project.id}/`}>
+  <div class="card__top">
+    <span class="card__n">{n}</span>
+    <span class="status" data-status={status}>{STATUS_LABEL[status]}</span>
+  </div>
+  <h3 class="heading">{title}</h3>
+  <p class="body-s card__summary">{summary}</p>
+  {
+    parts.length > 0 && (
+      <ul class="card__parts">
+        {parts.map((p) => (
+          <li class="data-s">{p}</li>
+        ))}
+      </ul>
+    )
+  }
+</a>

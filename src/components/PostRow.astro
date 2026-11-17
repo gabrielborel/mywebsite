@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { isoDate, slugify } from '../utils';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const { title, description, date, tags } = post.data;
+---
+
+<li class="post-row">
+  <time class="post-row__date" datetime={isoDate(date)}>{isoDate(date)}</time>
+  <div>
+    <h3 class="heading post-row__title">
+      <a href={`/blog/${post.id}/`}>{title}</a>
+    </h3>
+    <p class="body-s post-row__desc">{description}</p>
+    {
+      tags.length > 0 && (
+        <ul class="chips">
+          {tags.map((t) => (
+            <li>
+              <a class="chip" href={`/blog/tags/${slugify(t)}/`}>
+                {t}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</li>

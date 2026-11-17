@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import PostRow from '../../../components/PostRow.astro';
+import { slugify } from '../../../utils';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+  const byTag = new Map<string, { label: string; posts: typeof posts }>();
+  for (const post of posts) {
+    for (const t of post.data.tags) {
+      const slug = slugify(t);
+      if (!byTag.has(slug)) byTag.set(slug, { label: t, posts: [] });
+      byTag.get(slug)!.posts.push(post);
+    }
+  }
+  return [...byTag].map(([tag, v]) => ({
+    params: { tag },
+    props: { label: v.label, posts: v.posts },
+  }));
+}
+
+const { label, posts } = Astro.props;
+---
+
+<Base title={`Tag: ${label}`} description={`Posts com a tag ${label}.`}>
+  <div class="container">
+    <header class="page-head">
+      <p class="label">Tag</p>
+      <h1 class="display-l">{label}</h1>
+      <p class="ui" style="margin-top: var(--space-4);"><a href="/blog/">Todos os posts</a></p>
+    </header>
+    <div style="padding-bottom: var(--space-9);">
+      <ul class="post-list">
+        {posts.map((post) => <PostRow post={post} />)}
+      </ul>
+    </div>
+  </div>
+</Base>

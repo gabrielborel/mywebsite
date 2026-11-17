@@ -1,0 +1,14 @@
+---
+import { SITE } from '../config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="body-s">{SITE.name} · {year}</p>
+    <ul class="footer__links ui">
+      <li><a href={SITE.github}>GitHub</a></li>
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,67 @@
+---
+import { SITE } from '../config';
+
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/projetos/', label: 'Projetos' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/sobre/', label: 'Sobre' },
+];
+const isActive = (href: string) => path.startsWith(href.replace(/\/$/, ''));
+---
+
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a class="topbar__brand" href="/">{SITE.name}</a>
+    <nav aria-label="Principal">
+      <ul class="topbar__nav">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                class="navlink ui"
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <button
+      type="button"
+      class="btn btn--secondary btn--s"
+      id="theme-toggle"
+      aria-label="Alternar entre tema claro e escuro"
+    >
+      Tema
+    </button>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+
+  const current = () =>
+    root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  const paint = () => {
+    if (btn) btn.textContent = current() === 'dark' ? 'Tema: escuro' : 'Tema: claro';
+  };
+
+  btn?.addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // sem storage: o tema vale so ate recarregar a pagina
+    }
+    paint();
+  });
+
+  paint();
+</script>

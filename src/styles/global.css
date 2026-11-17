@@ -1,0 +1,670 @@
+/* Base visual do site, seguindo o Horizonte: regua fina no lugar de sombra, canto reto,
+   um unico acento (kelp), cor forte so para estado. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-000);
+  color: var(--ink-000);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 23px;
+  -webkit-font-smoothing: antialiased;
+  /* rodape sempre no fim da tela, mesmo em pagina curta */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--kelp);
+  text-underline-offset: 3px;
+  transition: color 120ms ease-out;
+}
+a:hover {
+  color: var(--kelp-strong);
+}
+
+/* Foco: anel de 2px deslocado 2px, sempre (Horizonte, Estados). */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* ---------- estilos de texto (nomes iguais aos do tokens.json) ---------- */
+
+.display-xl {
+  font-size: 56px;
+  line-height: 56px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.display-l {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.display-m {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.heading {
+  font-size: 21px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.body-l {
+  font-size: 18px;
+  line-height: 28px;
+}
+.body-s {
+  font-size: 13px;
+  line-height: 20px;
+}
+.ui {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.ui-s {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+.label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-200);
+}
+.data {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+}
+.data-l {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+}
+.data-s {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-200);
+}
+
+/* Em tela pequena os displays encolhem para nao estourar a largura
+   (unico desvio da escala do Horizonte). */
+@media (max-width: 640px) {
+  .display-xl {
+    font-size: 38px;
+    line-height: 42px;
+  }
+  .display-l {
+    font-size: 30px;
+    line-height: 36px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+/* ---------- layout ---------- */
+
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+}
+
+.skip {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  background: var(--surface-000);
+  border: 1px solid var(--line-200);
+  padding: var(--space-2) var(--space-3);
+  z-index: 10;
+}
+.skip:focus {
+  top: var(--space-2);
+}
+
+.section {
+  border-top: 1px solid var(--line-100);
+  padding-block: var(--space-8);
+}
+@media (min-width: 900px) {
+  .section {
+    padding-block: var(--space-9);
+  }
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+}
+.section-head__n {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+  color: var(--ink-200);
+}
+.section-head__rule {
+  width: 32px;
+  height: 1px;
+  background: var(--line-200);
+  flex: none;
+}
+
+.page-head {
+  padding-block: var(--space-8) var(--space-7);
+}
+.page-head .label {
+  margin-bottom: var(--space-3);
+}
+.page-head__lede {
+  margin-top: var(--space-4);
+  max-width: 62ch;
+  color: var(--ink-100);
+}
+
+/* ---------- barra superior ---------- */
+
+.topbar {
+  background: var(--surface-100);
+  border-bottom: 1px solid var(--line-100);
+}
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 56px;
+  flex-wrap: wrap;
+  padding-block: var(--space-2);
+}
+.topbar__brand {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-000);
+  text-decoration: none;
+  margin-right: auto;
+}
+.topbar__nav {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* celular: marca e botao de tema na primeira linha, navegacao na segunda */
+@media (max-width: 640px) {
+  .topbar__inner nav {
+    order: 3;
+    width: 100%;
+  }
+}
+
+.navlink {
+  color: var(--ink-100);
+  text-decoration: none;
+  padding-block: var(--space-1);
+  border-bottom: 2px solid transparent;
+}
+.navlink:hover {
+  color: var(--ink-000);
+}
+/* kelp marca o item de navegacao ativo */
+.navlink[aria-current='page'] {
+  color: var(--kelp);
+  border-bottom-color: var(--kelp);
+}
+
+/* ---------- botoes ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-1);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 120ms ease-out, color 120ms ease-out;
+}
+.btn--primary {
+  background: var(--kelp);
+  color: var(--on-kelp);
+}
+.btn--primary:hover {
+  background: var(--kelp-strong);
+  color: var(--on-kelp);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--ink-000);
+  border-color: var(--line-200);
+}
+.btn--secondary:hover {
+  background: var(--surface-100);
+  color: var(--ink-000);
+}
+.btn--s {
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  line-height: 18px;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  padding-block: var(--space-8) var(--space-9);
+}
+.hero .label {
+  margin-bottom: var(--space-5);
+}
+.hero__title {
+  max-width: 18ch;
+}
+.hero__lede {
+  margin-top: var(--space-5);
+  max-width: 56ch;
+  color: var(--ink-100);
+}
+.hero .btn-row {
+  margin-top: var(--space-6);
+}
+
+/* ---------- cards de projeto (BlockCard) ---------- */
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--surface-100);
+  border: 1px solid var(--line-100);
+  border-radius: var(--radius-0);
+  padding: var(--space-5);
+  color: var(--ink-000);
+  text-decoration: none;
+  transition: background-color 120ms ease-out;
+}
+.card:hover {
+  background: var(--surface-200);
+  color: var(--ink-000);
+}
+.card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+.card__n {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+  color: var(--ink-200);
+}
+.card__summary {
+  color: var(--ink-100);
+}
+.card__parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--space-3) 0 0;
+}
+
+/* etiqueta de estado: palavra + cor, nunca so cor */
+.status {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.status[data-status='planejado'],
+.status[data-status='em-andamento'] {
+  color: var(--signal-idle);
+}
+.status[data-status='concluido'] {
+  color: var(--signal-live);
+}
+
+/* ---------- linhas de post ---------- */
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line-100);
+}
+.post-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--space-5);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--line-100);
+}
+@media (max-width: 640px) {
+  .post-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+}
+.post-row__date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ink-200);
+  padding-top: 4px;
+}
+.post-row__title a {
+  color: var(--ink-000);
+  text-decoration: none;
+}
+.post-row__title a:hover {
+  color: var(--kelp);
+  text-decoration: underline;
+}
+.post-row__desc {
+  margin-top: var(--space-1);
+  color: var(--ink-100);
+}
+
+/* ---------- tags do blog ---------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.chip {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line-200);
+  border-radius: var(--radius-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-100);
+  text-decoration: none;
+}
+a.chip:hover {
+  color: var(--kelp);
+  border-color: var(--kelp);
+}
+.chip[aria-current='page'] {
+  color: var(--kelp);
+  border-color: var(--kelp);
+}
+.post-row .chips {
+  margin-top: var(--space-3);
+}
+
+/* ---------- tabela de especificacoes ---------- */
+
+.spec {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--line-100);
+  margin-block: var(--space-6);
+}
+.spec th,
+.spec td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-100);
+}
+.spec th {
+  width: 30%;
+  background: var(--surface-200);
+  /* ink-200 sobre surface-200 nao passa de 4.5:1 abaixo de 24px: usa ink-100 */
+  color: var(--ink-100);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.spec td {
+  background: var(--surface-100);
+}
+@media (max-width: 640px) {
+  .spec th,
+  .spec td {
+    display: block;
+    width: 100%;
+  }
+  .spec th {
+    border-bottom: 0;
+    padding-bottom: var(--space-1);
+  }
+}
+
+/* ---------- texto longo (posts e paginas de projeto) ---------- */
+
+.article {
+  padding-block: var(--space-8) var(--space-9);
+}
+.article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.article__title {
+  max-width: 22ch;
+}
+.article__lede {
+  margin-top: var(--space-4);
+  max-width: 62ch;
+  color: var(--ink-100);
+}
+
+/* Em leitura longa usamos body-l (18/28) em vez de body (15/23): o Horizonte
+   restringe body-l a telas pouco densas, e um post e exatamente isso. */
+.prose {
+  max-width: 68ch;
+  margin-top: var(--space-7);
+  font-size: 18px;
+  line-height: 28px;
+}
+.prose > * + * {
+  margin-top: var(--space-4);
+}
+.prose h2 {
+  margin-top: var(--space-7);
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.prose h3 {
+  margin-top: var(--space-6);
+  font-size: 21px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.prose ul,
+.prose ol {
+  padding-left: var(--space-5);
+}
+.prose li + li {
+  margin-top: var(--space-1);
+}
+.prose blockquote {
+  margin-left: 0;
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--line-200);
+  color: var(--ink-100);
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line-100);
+  margin-block: var(--space-6);
+}
+.prose img {
+  width: 100%;
+  height: auto;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 23px;
+}
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line-100);
+  text-align: left;
+}
+.prose th {
+  background: var(--surface-200);
+  color: var(--ink-100);
+}
+
+/* codigo: sempre em mono (Horizonte: prosa nunca em mono, codigo sempre) */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  background: var(--surface-200);
+  padding: 1px var(--space-1);
+  border-radius: var(--radius-1);
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  /* surface-000 e nao surface-100: o comentario do tema claro do Shiki (#66707B)
+     fica em 4.65:1 sobre surface-000 e em 4.44:1 sobre surface-100. */
+  background: var(--surface-000);
+  border: 1px solid var(--line-200);
+  padding: var(--space-4);
+  overflow-x: auto;
+}
+.prose pre code {
+  font-family: inherit;
+}
+
+/* Shiki em dois temas: cada token traz --shiki-light e --shiki-dark */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+}
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .astro-code,
+  :root:not([data-theme='light']) .astro-code span {
+    color: var(--shiki-dark);
+  }
+}
+
+/* ---------- rodape ---------- */
+
+.footer {
+  border-top: 1px solid var(--line-100);
+  background: var(--surface-100);
+  padding-block: var(--space-6);
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+.footer__links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

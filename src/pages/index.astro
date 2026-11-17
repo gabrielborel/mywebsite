@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostRow from '../components/PostRow.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Base>
+  <div class="container">
+    <section class="hero">
+      <p class="label">Firmware · Eletrônica · Matemática</p>
+      <h1 class="display-xl hero__title">Do esquemático ao registrador.</h1>
+      <p class="body-l hero__lede">
+        Projeto placas, escrevo firmware do zero e documento o caminho, incluindo os erros. Aqui
+        ficam os projetos e as anotações de estudo.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/projetos/">Ver projetos</a>
+        <a class="btn btn--secondary" href="/blog/">Ler o blog</a>
+      </div>
+    </section>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead n="01" title="Projetos" />
+      <div class="grid">
+        {
+          projects.map((p, i) => (
+            <ProjectCard project={p} n={String(i + 1).padStart(2, '0')} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHead n="02" title="Blog" />
+      {
+        posts.length > 0 ? (
+          <ul class="post-list">
+            {posts.map((post) => (
+              <PostRow post={post} />
+            ))}
+          </ul>
+        ) : (
+          <p class="body-l">Os primeiros posts chegam em breve.</p>
+        )
+      }
+      <p class="ui" style="margin-top: var(--space-5);">
+        <a href="/blog/">Todos os posts</a>
+      </p>
+    </div>
+  </section>
+</Base>

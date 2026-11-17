@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Projetos" description="Projetos de hardware e firmware embarcado.">
+  <div class="container">
+    <header class="page-head">
+      <p class="label">Projetos</p>
+      <h1 class="display-l">Hardware e firmware</h1>
+      <p class="body-l page-head__lede">
+        Cada projeto tem uma página com as especificações e o histórico de decisões.
+      </p>
+    </header>
+    <div class="grid" style="padding-bottom: var(--space-9);">
+      {projects.map((p, i) => <ProjectCard project={p} n={String(i + 1).padStart(2, '0')} />)}
+    </div>
+  </div>
+</Base>

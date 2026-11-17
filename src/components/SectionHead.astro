@@ -1,0 +1,14 @@
+---
+// Seção numerada: "01", fio curto, título (Horizonte, Desenho técnico).
+interface Props {
+  n: string;
+  title: string;
+}
+const { n, title } = Astro.props;
+---
+
+<div class="section-head">
+  <span class="section-head__n">{n}</span>
+  <span class="section-head__rule" aria-hidden="true"></span>
+  <h2 class="display-l">{title}</h2>
+</div>
