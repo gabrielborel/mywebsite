@@ -1,27 +1,22 @@
 ---
-title: "Começando o blog"
-description: "O que este espaço vai cobrir e como um post técnico fica por aqui."
+title: "Por que um blog em pleno 2026, quase 2027?"
+description: "Para aprender e adquirir conhecimento: por que este blog existe e como ele vai funcionar."
 date: 2026-11-17
-tags: ["meta", "firmware"]
+tags: ["meta", "aprendizado"]
 ---
 
-Este blog nasce junto com os projetos que documenta: a flight controller com STM32F405, a PDB própria e o que eu for aprendendo de firmware, eletrônica e matemática no caminho.
+Para aprender, adquirir conhecimento.
 
-A ideia é registrar o raciocínio, incluindo o que deu errado. Quando uma decisão vem de um manual, o post diz de qual documento e de qual seção.
+O blog vai servir como um repositório de conhecimento, e cada post vai ser uma oportunidade para aprofundar em um tópico importante para os meus objetivos profissionais e de desenvolvimento pessoal.
 
-## Como um post de firmware fica
+Pesquisas sobre técnicas de estudo indicam que explicar o conteúdo ajuda a aprender. A técnica mais próxima disso, a autoexplicação, ficou com utilidade moderada na revisão de Dunlosky e colegas (2013), abaixo de espaçar o estudo e de se testar, que ficaram com utilidade alta. Por meio dos posts, estarei explicando.
 
-Um exemplo de bloco de código, só para ver a formatação. Habilitar o clock do GPIOA e configurar o pino PA5 como saída, direto nos registradores:
+Os posts do blog serão nichados, com o foco total em desenvolvimento de software embarcado, e por conta disso áreas relacionadas, como eletrônica e matemática, serão abordadas também em algum momento. Mas também sem me limitar a isso: o blog é meu, o que der vontade de postar, será postado.
 
-```c
-// Habilita o clock do GPIOA.
-RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-(void)RCC->AHB1ENR;  // leitura de espera, ver abaixo
+A ideia inicial é um post por semana, no sábado ou domingo, em horário a definir.
 
-// PA5 como saída (MODER5 = 01).
-GPIOA->MODER = (GPIOA->MODER & ~GPIO_MODER_MODER5) | GPIO_MODER_MODER5_0;
-```
+Muito provavelmente ninguém além de mim vai ler esses posts, mas não tem problema. O único compromisso com isso é eu aprender no processo.
 
-A leitura de espera existe porque o errata do STM32F405 (ES0182 Rev 19, seção 2.2.13) avisa que pode haver um atraso entre habilitar o clock no RCC e o periférico responder de fato. Entre as soluções do documento está justamente uma leitura dummy do registrador logo depois de habilitar o clock.
+## Fontes
 
-Este post é um exemplo: substitua pelo primeiro texto de verdade.
+- Dunlosky, J.; Rawson, K. A.; Marsh, E. J.; Nathan, M. J.; Willingham, D. T. (2013). [Improving Students' Learning With Effective Learning Techniques](https://doi.org/10.1177/1529100612453266). *Psychological Science in the Public Interest*, 14(1), 4-58.
